@@ -1,0 +1,44 @@
+.input {
+    min-height: 44px;
+    border: 1px solid var(--gray);
+    border-radius: 30px;
+    padding: 4px 16px;
+    outline: none;
+    transition: border .2s ease-in-out;
+  }
+  
+  .input:focus {
+    border-color:#0ccc7c;
+  }
+  
+  .input--large {
+    height: 100px;
+    border-radius: 10px;
+    resize: vertical;
+  }
+  
+  .input--error, .input--error:focus {
+    border-color: var(--red);
+  }
+  
+  .input-group {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .input-group label > span {
+    color: var(--red);
+  }
+  
+  .input-group__error {
+    font-size: 13px;
+    color: var(--red);
+  }
+  
+  .input-group__counter {
+    color: var(--gray);
+  }
+  
+  .input-group__counter--error {
+    color: var(--red);
+  }
