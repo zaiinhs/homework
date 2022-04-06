@@ -1,0 +1,22 @@
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 100px;
+  }
+  
+  #home {
+    margin-top: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .content {
+    margin-top: 40px;
+  }
+  
+  .tracks {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    column-gap: 20px;
+    row-gap: 40px;
+    justify-items: center;
+  }

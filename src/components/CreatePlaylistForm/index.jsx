@@ -1,11 +1,16 @@
 import { useState } from 'react';
 import { addTracksToPlaylist, createPlaylist } from '../../lib/api';
+import {useSelector} from "react-redux";
+import PropTypes from 'prop-types';
 import Button from '../Button';
 import Input from '../Input';
 import InputGroup from '../InputGroup';
 import './style.css';
 
-function CreatePlaylistForm({ accessToken, userId, uriTracks }) {
+function CreatePlaylistForm({ uriTracks }) {
+  const accessToken = useSelector(state => state.auth.accessToken);
+  const userId = useSelector(state => state.auth.user.id);
+
   const [form, setForm] = useState({
     title: '',
     description: '',
@@ -109,6 +114,11 @@ function CreatePlaylistForm({ accessToken, userId, uriTracks }) {
       </div>
     </div>
   )
+}
+
+
+CreatePlaylistForm.propTypes = {
+  uriTracks: PropTypes.array.isRequired,
 }
 
 export default CreatePlaylistForm

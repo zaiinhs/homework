@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import Button from '../Button';
 import './style.css';
+import { useSelector } from 'react-redux';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 import { searchTrack } from '../../lib/api';
 
-function SearchBar({ accessToken, onSuccess, onClearSearch }) {
+function SearchBar({ onSuccess, onClearSearch }) {
+  const accessToken = useSelector(state => state.auth.accessToken);
+
   const [text, setText] = useState('');
   const [isClear, setIsClear] = useState(true);
 
@@ -57,7 +60,6 @@ function SearchBar({ accessToken, onSuccess, onClearSearch }) {
 export default SearchBar
 
 SearchBar.propTypes = {
-  accessToken: PropTypes.string.isRequired,
   onSuccess: PropTypes.func.isRequired,
   onClearSearch: PropTypes.func.isRequired,
 }

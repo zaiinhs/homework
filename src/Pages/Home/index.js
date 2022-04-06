@@ -1,3 +1,4 @@
+import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Track from "../../components/Track";
 import SearchBar from "../../components/SearchBar";
@@ -5,15 +6,17 @@ import config from "../../lib/config";
 import Button from "../../components/Button";
 import CreatePlaylistForm from "../../components/CreatePlaylistForm";
 import { getUserProfile } from "../../lib/api";
+import { setLogin } from "../../redux/authReducer";
+import "./style.css";
 
 function Home() {
-  const [accessToken, setAccessToken] = useState("");
-  const [isAuthorize, setIsAuthorize] = useState(false);
   const [tracks, setTracks] = useState([]);
   const [selectedTracksUri, setSelectedTracksUri] = useState([]);
   const [selectedTracks, setSelectedTracks] = useState([]);
   const [isInSearch, setIsInSearch] = useState(false);
-  const [user, setUser] = useState({});
+
+  const isAuthorize = useSelector((state) => state.auth.isAuthorize);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const accessTokenParams = new URLSearchParams(window.location.hash).get(
@@ -21,14 +24,13 @@ function Home() {
     );
 
     if (accessTokenParams !== null) {
-      setAccessToken(accessTokenParams);
-      setIsAuthorize(true);
-
       const setUserProfile = async () => {
         try {
-          const response = await getUserProfile(accessTokenParams);
+          const responseUser = await getUserProfile(accessTokenParams);
 
-          setUser(response);
+          dispatch(
+            setLogin({ accessToken: accessTokenParams, user: responseUser })
+          );
         } catch (error) {
           console.log(error, "Error nih!");
         }
@@ -89,19 +91,11 @@ function Home() {
 
       {isAuthorize && (
         <main className="container" id="home">
-          <CreatePlaylistForm
-            accessToken={accessToken}
-            userId={user.id}
-            uriTracks={selectedTracksUri}
-          />
+          <CreatePlaylistForm uriTracks={selectedTracksUri} />
 
           <hr />
 
-          <SearchBar
-            accessToken={accessToken}
-            onSuccess={onSuccessSearch}
-            onClearSearch={clearSearch}
-          />
+          <SearchBar onSuccess={onSuccessSearch} onClearSearch={clearSearch} />
 
           <div className="content">
             {tracks.length === 0 && <p>Tidak ada Tracks</p>}
