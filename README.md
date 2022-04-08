@@ -2,4 +2,5 @@
 
 ### Spotify
 
-redux
+[] redux
+[] react-router-dom
