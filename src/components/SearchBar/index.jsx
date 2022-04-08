@@ -1,10 +1,11 @@
 import { useState } from 'react';
 import Button from '../Button';
 import './style.css';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import PropTypes from 'prop-types';
 import Input from '../Input';
 import { searchTrack } from '../../lib/api';
+import {setLogout} from '../../redux/authReducer';
 
 function SearchBar({ onSuccess, onClearSearch }) {
   const accessToken = useSelector(state => state.auth.accessToken);
@@ -12,6 +13,8 @@ function SearchBar({ onSuccess, onClearSearch }) {
   const [text, setText] = useState('');
   const [isClear, setIsClear] = useState(true);
 
+  const dispatch = useDispatch();
+  
   const handleInput = (e) => {
     setText(e.target.value);
   }
@@ -23,10 +26,14 @@ function SearchBar({ onSuccess, onClearSearch }) {
       const response = await searchTrack(text, accessToken);
 
       const tracks = response.tracks.items;
-      onSuccess(tracks);
+      onSuccess(tracks, text);
       setIsClear(false);
     } catch (error) {
-      console.log(error, "Error nih!");
+      if (error.response.status === 401) {
+        dispatch(setLogout());
+      }else{
+        console.log(error, "Error nih!");
+      }
     }
   }
 

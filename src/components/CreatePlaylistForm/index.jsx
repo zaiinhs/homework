@@ -1,15 +1,18 @@
 import { useState } from 'react';
 import { addTracksToPlaylist, createPlaylist } from '../../lib/api';
-import {useSelector} from "react-redux";
+import {useSelector, useDispatch} from "react-redux";
 import PropTypes from 'prop-types';
 import Button from '../Button';
 import Input from '../Input';
 import InputGroup from '../InputGroup';
+import {setLogout} from '../../redux/authReducer';
 import './style.css';
+import { toHaveStyle } from '@testing-library/jest-dom/dist/matchers';
 
 function CreatePlaylistForm({ uriTracks }) {
   const accessToken = useSelector(state => state.auth.accessToken);
   const userId = useSelector(state => state.auth.user.id);
+  const dispatch = useDispatch();
 
   const [form, setForm] = useState({
     title: '',
@@ -67,7 +70,12 @@ function CreatePlaylistForm({ uriTracks }) {
 
           setForm({ title: '', description: '' });
         } catch (error) {
-          console.log(error, "Error nih!!!");
+          console.log(error, "Error nih!");
+          if (error.status === 401) {
+            dispatch(setLogout());
+          }else{
+            console.log(error, "Error nih!");
+          }
         }
       } else {
         console.log('Please select at least one track');
