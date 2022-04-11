@@ -7,7 +7,6 @@ import Input from '../Input';
 import InputGroup from '../InputGroup';
 import {setLogout} from '../../redux/authReducer';
 import './style.css';
-import { toHaveStyle } from '@testing-library/jest-dom/dist/matchers';
 
 function CreatePlaylistForm({ uriTracks }) {
   const accessToken = useSelector(state => state.auth.accessToken);

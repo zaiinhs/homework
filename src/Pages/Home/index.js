@@ -1,4 +1,3 @@
-import { useDispatch, useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import Track from "../../components/Track";
 import SearchBar from "../../components/SearchBar";
