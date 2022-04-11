@@ -6,6 +6,7 @@ library
 
 - redux
 - react-router-dom
+- eslint
 
 # Getting Started
 
