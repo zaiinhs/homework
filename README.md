@@ -8,6 +8,9 @@ library
 - react-router-dom
 - eslint
 
+CCS :
+use flex and grid
+
 # Getting Started
 
 To get started running the project locally, please follow the steps below.
